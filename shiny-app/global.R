@@ -33,13 +33,14 @@ executeCall <- function(req) {
   resp_list <- RCurl::getURIAsynchronous(req)
   resp_xml  <- lapply(resp_list, xml2::read_xml)
   resp      <- do.call(c, lapply(resp_xml, xml2::as_list))
-  
-  res <- dplyr::data_frame(Street = resp$AddressValidateResponse$Address$Address2[[1]],
-                    City = resp$AddressValidateResponse$Address$City[[1]],
-                    State = resp$AddressValidateResponse$Address$State[[1]],
-                    Zip =  resp$AddressValidateResponse$Address$Zip5[[1]])
-  
-  return(res)
+  if(is.null(resp$AddressValidateResponse$Address$Error)){
+    res <- dplyr::data_frame(Street = resp$AddressValidateResponse$Address$Address2[[1]],
+                             City = resp$AddressValidateResponse$Address$City[[1]],
+                             State = resp$AddressValidateResponse$Address$State[[1]],
+                             Zip =  resp$AddressValidateResponse$Address$Zip5[[1]])
+    
+    return(res)
+  }
 }
 
 ######### TODO #########
