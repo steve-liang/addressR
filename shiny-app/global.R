@@ -16,7 +16,7 @@ request_template <- list(
   )
 )
 
-compose_xml <- function(usr, street, city, state){
+compose_xml <- function(usr, street, city, state, zip = NULL){
   xml_req <- xml2::as_xml_document(request_template)
   xml2::xml_attr(xml_req, "USERID") <- usr
   address_node <- xml2::xml_add_child(xml_req, "Address", ID = 0)
@@ -24,7 +24,7 @@ compose_xml <- function(usr, street, city, state){
   xml2::xml_add_child(address_node, "Address2", street)
   xml2::xml_add_child(address_node, "City", city)
   xml2::xml_add_child(address_node, "State", state)
-  xml2::xml_add_child(address_node, "Zip5")
+  xml2::xml_add_child(address_node, "Zip5", zip)
   xml2::xml_add_child(address_node, "Zip4")
   utils::URLencode(paste0(ROOT_URL, xml_req))
 }
@@ -37,7 +37,9 @@ executeCall <- function(req) {
     res <- dplyr::data_frame(Street = resp$AddressValidateResponse$Address$Address2[[1]],
                              City = resp$AddressValidateResponse$Address$City[[1]],
                              State = resp$AddressValidateResponse$Address$State[[1]],
-                             Zip =  resp$AddressValidateResponse$Address$Zip5[[1]])
+                             Zip =  resp$AddressValidateResponse$Address$Zip5[[1]],
+                             Zip4 =  resp$AddressValidateResponse$Address$Zip4[[1]]
+    )
     
     return(res)
   }
