@@ -1,9 +1,9 @@
 server <- function(input, output){
   
   validated_res <- reactive({
-    req(input$textInput)
+    req(input$mat_textInput)
     
-    entered_addr <- input$textInput
+    entered_addr <- input$mat_textInput
     
     street <- trimws(stringr::str_split(entered_addr, pattern = ",")[[1]][1])
     city <- trimws(stringr::str_split(entered_addr, pattern = ",")[[1]][2])
