@@ -14,7 +14,7 @@ server <- function(input, output){
   })
   
   output$validated_results_DT <- DT::renderDataTable({
-    validate(need(validated_res() > 0, message = "Cannot find validated address, try again"))
+    validate(need(nrow(validated_res()) > 0, message = "Cannot find validated address, try again"))
     DT::datatable(validated_res())
   })
   
