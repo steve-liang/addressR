@@ -3,7 +3,7 @@ to_building_address <- function(x, removeStreetName = TRUE){
   #### STEP 1, Suite/Unit Number #######
   #### thanks to https://stackoverflow.com/questions/51370415/remove-unit-number-clause-from-street-address-string-in-r
   # x <- stringr::str_replace_all(x, "#[[:digit:]]*", "")
-  x <- stringr::str_replace_all(x, "(?i)(SUITE|STE|UNIT)s? \\S+", "")
+  x <- stringr::str_replace_all(x, "(?i)(SUITE|STE|UNIT|APT)s? \\S+", "")
   x <- stringr::str_replace_all(x, "#\\S+", "")
   
   #### STEP 2: Remove Punctuations but keep hypthon between numbers in case of range of street numbers
