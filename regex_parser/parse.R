@@ -10,11 +10,11 @@ to_building_address <- function(x, removeStreetName = TRUE){
   x <- stringr::str_replace_all(x, "[[:punct:]&&[^-]]|(?<![[:digit:]])-|-(?![[:digit:]])", "")
   
   #### STEP 3: Standardize Numbered Street Name, Directions, Suffix
-  x <- stringr::str_replace_all(x, stringr::regex(suffix_mapping, ignore_case = TRUE))
-  x <- stringr::str_replace_all(x, stringr::regex(dir_mapping, ignore_case = TRUE))
-  # x <- stringr::str_replace_all(x, stringr::regex(nsn_mapping, ignore_case = TRUE))
+  x <- stringr::str_replace_all(x, stringr::regex(suffix_mapping, ignore_case = TRUE)) # standardize street suffix
+  x <- stringr::str_replace_all(x, stringr::regex(dir_mapping, ignore_case = TRUE)) # standardize directions
+  x <- stringr::str_replace_all(x, stringr::regex(nsn_mapping, ignore_case = TRUE)) # standardize numbered street name
   
-  ### FINAL STEP: remove extra spaces
+  ### FINAL STEP: convert to upper case and remove extra spaces
   x <- stringr::str_squish(stringr::str_to_upper(x))
   return(x)
 }
